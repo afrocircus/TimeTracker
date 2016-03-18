@@ -5,6 +5,8 @@
 google.charts.load("current", {packages:['corechart']});
 google.charts.setOnLoadCallback(function() {drawChart([])});
 
+var chartData = [];
+
 function drawChart(dataArray) {
     var data = google.visualization.arrayToDataTable(dataArray);
 
@@ -21,7 +23,7 @@ function drawChart(dataArray) {
                     3]);
 
     var options = {
-        title: "Duration of "+ dataArray[0][0] +" in Hours",
+        title: "Duration of "+ dataArray[0][0] +" in Days",
         width: 1000,
         height: 500,
         animation:{
@@ -37,6 +39,27 @@ function drawChart(dataArray) {
     chart.draw(data, options);
 }
 
+
+//Doesn't need to be a seperate function, but now I know how callbacks work!
+function getDataFromServer(project, sequence, shot, callback){
+    $.ajax({
+        type:"POST",
+        url: "/load_chart",
+        data: {
+            project: project,
+            sequence: sequence,
+            shot: shot
+        },
+        dataType: 'json',
+        success:function(data){
+            callback(data);
+        },
+        error: function(){
+            callback([]);
+        }
+    });
+}
+
 $("#projects").change(function() {
     $.ajax({
         type: "POST",
@@ -50,6 +73,7 @@ $("#projects").change(function() {
         }
     });
 });
+
 $("#sequences").change(function() {
     $.ajax({
         type: "POST",
@@ -63,24 +87,42 @@ $("#sequences").change(function() {
         }
     });
 });
+
 $("#submit").bind('click', function() {
     $("#loader").show();
-    $.ajax({
-        type:"POST",
-        url: "/load_chart",
-        data: {
-            project: $("#projects").val(),
-            sequence: $("#sequences").val(),
-            shot: $("#shots").val()
-        },
-        dataType: 'json',
-        success:function(data){
+    project = $("#projects").val();
+    sequence = $("#sequences").val();
+    shot = $("#shots").val();
+    getDataFromServer(project, sequence, shot, function(chartData){
+        if (chartData === undefined || chartData.length == 0) {
+            alert("error");
+        }
+        else {
             $("#loader").hide();
-            drawChart(data); // Returns a json object of shot/seq information.
-        },
-        error: function(data){
-            alert('error in ajax return');
-            console.log(data);
+            $("#bid-panel").show();
+            drawChart(chartData);
         }
     });
 });
+
+$("#export").bind('click', function () {
+    $("#loader").show();
+    $.ajax({
+        type: "POST",
+        url: "/export_data",
+        data: {
+            project: $("#projects").val()
+        },
+        success: function (data) {
+            if (data == 'success'){
+                $("#loader").hide();
+                alert('export complete')
+            }
+            else {
+                alert('export failed')
+            }
+        }
+    });
+});
+
+

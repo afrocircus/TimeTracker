@@ -1,11 +1,21 @@
 import ftrack_api
+import os
+import csv
+import xlsxwriter
+import glob
+import traceback
 
-session = ftrack_api.session.Session(
-    server_url='http://192.168.0.209',
-    api_user='Natasha',
-    api_key='68ec1c94-8e8f-4355-a121-d054f4af91f5'
-)
 
+# setup environment
+try:
+    import config
+    session = ftrack_api.Session(
+        server_url=config.server_url,
+        api_key=config.api_key,
+        api_user=config.api_user
+    )
+except:
+    print traceback.format_exc
 
 def getProjects():
     projects = session.query('Project').all()
@@ -37,7 +47,7 @@ def getSequenceChart(projectName):
     d = getProjectChildren(projectName)
     seqList = getSequenceList([], d)
     seqDataList = []
-    seqDataList.append(["Sequences", "Duration", "Bid", {'role':'style'}])
+    seqDataList.append(["Sequences", "Actual", "Bid", {'role':'style'}])
     for seq in seqList:
         shotTimes = getShotTimeDict(seq, d)
         seqTime, bidTime = getSeqTiming(shotTimes)
@@ -49,7 +59,7 @@ def getShotChart(projectName, sequenceName):
     d = getProjectChildren(projectName)
     shotTimes = getShotTimeDict(sequenceName, d)
     shotDataList = []
-    shotDataList.append(["Shots", "Duration", "Bid", {'role':'style'}])
+    shotDataList.append(["Shots", "Actual", "Bid", {'role':'style'}])
     for shot in shotTimes.keys():
         time, bid = shotTimes[shot]
         shotDataList.append([str(shot), formatTime(time), formatTime(bid), "#dc3912"])
@@ -60,7 +70,7 @@ def getTaskChart(projectName, sequenceName, shotName):
     d = getProjectChildren(projectName)
     taskDict = getTaskTimeDict(sequenceName, shotName, d)
     taskDataList = []
-    taskDataList.append(["Tasks", "Duration", "Bid", {'role':'style'}])
+    taskDataList.append(["Tasks", "Actual", "Bid", {'role':'style'}])
     for task in taskDict.keys():
         time = taskDict[task]['duration']
         bid = taskDict[task]['bid']
@@ -82,7 +92,7 @@ def getShotTimeDict(seq, d):
 
 
 def getTaskTimeDict(seq, shot, d):
-    taskTimes = {}
+    taskDict = {}
     seqName = '%s/Sequence' % seq
     shotName = '%s/Shot' % shot
     if d.has_key(seqName):
@@ -104,8 +114,7 @@ def createJson(node, d):
         if n['object_type']['name'] == 'Task':
             taskDict = {}
             taskDict['task'] = n['name']
-            taskDict['duration'] = taskTime(n)
-            taskDict['user'] = 'Natasha'
+            taskDict['duration'], taskDict['user'] = taskTime(n)
             taskDict['bid'] = n['bid']
             taskDictMain[n['name']] = taskDict
             d[key] = taskDictMain
@@ -116,9 +125,17 @@ def createJson(node, d):
 
 def taskTime(task):
     tt = 0
+    userid = ''
+    user = {}
     for timelog in task['timelogs']:
         tt += timelog['duration']
-    return tt
+        userid = timelog['user_id']
+    try:
+        user = session.query('User where id is %s' % userid).one()
+    except:
+        user['username'] = ''
+
+    return tt, user['username']
 
 
 def getDict(ref, d):
@@ -164,7 +181,109 @@ def getSeqTiming(d):
 
 
 def formatTime(seconds):
-    h = m = s = 0
-    m, s = divmod(seconds, 60)
-    h, m = divmod(m, 60)
-    return h
+    h = seconds/3600
+    d = h/8
+    return round(d, 2)
+
+
+def exportCVSData(project):
+    d = getProjectChildren(project)
+    sequences = getSequences(project)
+    exportDir = '/home/natasha/Desktop/exportCSV'
+    if not os.path.exists(exportDir):
+        os.makedirs(exportDir)
+    for sequence in sequences:
+        dataList = formatData(sequence, d)
+        writeToCVS(project, sequence, exportDir, dataList)
+    consolidateCVS(exportDir, project)
+
+
+def formatData(sequence, d):
+    shotTimes = getShotTimeDict(sequence, d)
+    taskList = set()
+    shotTaskTimeDict = {}
+    mainShotDict = {}
+    for key in shotTimes:
+        shotTaskTimeDict[key] = getTaskTimeDict(sequence, key, d)
+        for task in shotTaskTimeDict[key].keys():
+            taskList.add(task)
+
+    for key in shotTimes:
+        tempDict = {}
+        taskTimes = shotTaskTimeDict[key]
+        tempDict['total'] = shotTimes[key]
+        for task in taskList:
+            if taskTimes.has_key(task):
+                tempDict[task] = (taskTimes[task]['duration'], taskTimes[task]['bid'])
+            else:
+                tempDict[task] = (0.0, 0.0)
+        mainShotDict[key] = tempDict
+
+    tmpList = ['', 'total', 'total', 'total']
+    for task in taskList:
+        tmpList.extend([task, task, task])
+    dataList = []
+    dataList.append(tmpList)
+    titles = ['Shots', 'Actual (days)', 'Bid (days)', 'Margin (%)']
+
+    for task in taskList:
+        titles.append('Actual (days)')
+        titles.append('Bid (days)')
+        titles.append('Margin (%)')
+    dataList.append(titles)
+    for key in mainShotDict.keys():
+        shotList = []
+        shotList.append(key)
+        shotTime = mainShotDict[key]['total']
+        act = formatTime(shotTime[0])
+        bid = formatTime(shotTime[1])
+        if bid != 0.0:
+            margin = ((bid - act)/bid)*100
+        else:
+            margin = 0.0
+        shotList.append(act)
+        shotList.append(bid)
+        shotList.append(round(margin, 2))
+        for task in taskList:
+            taskTime = mainShotDict[key][task]
+            act = formatTime(taskTime[0])
+            bid = formatTime(taskTime[1])
+            if bid != 0.0:
+                margin = ((bid - act)/bid)*100
+            else:
+                margin = 0.0
+            shotList.append(act)
+            shotList.append(bid)
+            shotList.append(round(margin, 2))
+        dataList.append(shotList)
+    return dataList
+
+
+def writeToCVS(project, sequence, exportDir, dataList):
+    exportFile = os.path.join(exportDir, '%s_%s.csv' % (project, sequence))
+    with open(exportFile, 'wb') as fp:
+        a = csv.writer(fp)
+        a.writerows(dataList)
+
+def consolidateCVS(exportDir, project):
+    workbook = xlsxwriter.Workbook('%s/%s_compiled.xlsx' % (exportDir,project))
+    for filename in glob.glob('%s/*.csv' % exportDir):
+        fpath, fname = os.path.split(filename)
+        fsname, fext = os.path.splitext(fname)
+        worksheet = workbook.add_worksheet(fsname)
+        spamReader = csv.reader(open(filename, 'rb'))
+        cell_format = workbook.add_format()
+        cell_format.set_bold()
+        cell_format.set_font_color('red')
+        for rowx, row in enumerate(spamReader):
+            for colx, value in enumerate(row):
+                if value and value[0] == '-': # To avoid error when converting str with negative value to float.
+                    worksheet.set_row(rowx, None, cell_format)
+                worksheet.write(rowx, colx, value)
+
+    workbook.close()
+    # Clear the csv files
+    for filename in glob.glob('%s/*.csv' % exportDir):
+        os.remove(filename)
+
+exportCVSData('bg_tlf')

@@ -42,3 +42,13 @@ def loadChart():
         dataArr = getTaskChart(project, sequence, shot)
 
     return json.dumps(dataArr)
+
+
+@app.route('/export_data', methods=['POST'])
+def exportData():
+    project = request.form['project']
+    try:
+        exportCVSData(project)
+        return 'success'
+    except Exception, e:
+        print e
