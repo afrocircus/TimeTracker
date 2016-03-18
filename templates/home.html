@@ -1,50 +1,48 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="banner_div">
-        <img class="banner" src="/static/images/banner.png" alt="Banner Image"/>
-    </div>
-    <div class="page-header">
-        <h2>Time Tracker</h2>
-    </div>
-    <div>
-        <table class="col-sm-5" >
-            <tr>
-                <td>
-                    <label>Project:</label>
-                    <select id="projects" name="projects">
-                    {% for p in project_list %}
-                        <option id="{{ p }}" value="{{ p }}">{{ p }}</option>
-                    {% endfor %}
-                    </select>
-                </td>
-                <td>
-                    <label>Sequence:</label>
-                    <select id="sequences" name="sequences">
-                        <option value=all>all</option>
-                    </select>
-                </td>
-                <td>
-                    <label>Shot:</label>
-                    <select id="shots" name="shots">
-                        <option value=all>all</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="button" id="submit" value="Display Chart"> </input>
-                </td>
-                <td>
-                    <input type="button" id="export" value="Export to XLS"> </input>
-                </td>
-                <td>
-                    <img src="/static/images/ajax-loader.gif" style="display: none;" id="loader">
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class='panel panel-default' id="bid-panel" style="display: none;">
-        <div class='panel-heading'><h3 class='panel-title'>Bid Comparison Chart</h3></div>
-        <div class='panel-body'>
-            <div id="columnchart_values"></div>
+    <div class="container">
+        <div class="banner_div">
+            <img class="banner" src="/static/images/banner.png" alt="Banner Image"/>
+        </div>
+        <div class="page-header">
+            <h2>Time Tracker</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <span class="label label-default">Project:</span>
+                <select class="form-control" id="projects" name="projects">
+                {% for p in project_list %}
+                    <option id="{{ p }}" value="{{ p }}">{{ p }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <span class="label label-default">Sequence:</span>
+                <select class="form-control" id="sequences" name="sequences">
+                    <option value=all>all</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <span class="label label-default">Shot:</span>
+                <select class="form-control" id="shots" name="shots">
+                    <option value=all>all</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <input class="btn btn-default" type="button" id="submit" value="Display Chart"> </input>
+                <input class="btn btn-default" type="button" id="export" value="Export to XLS"> </input>
+                <img src="/static/images/ajax-loader.gif" style="display: none;" id="loader">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class='panel panel-default' id="bid-panel" style="display: none;">
+                <div class='panel-heading'><h3 class='panel-title'>Bid Comparison Chart</h3></div>
+                <div class='panel-body' id="columnchart_values"></div>
+            </div>
         </div>
     </div>
     <script src="/static/js/main.js" type=text/javascript></script>
