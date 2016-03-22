@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a51f827e-f116-4010-a379-56ecceb2bc95" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimeTracker.py" afterPath="$PROJECT_DIR$/TimeTracker.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ftrack.py" afterPath="$PROJECT_DIR$/ftrack.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.py" afterPath="$PROJECT_DIR$/routes.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/main.js" afterPath="$PROJECT_DIR$/static/js/main.js" />
@@ -21,7 +22,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/TimeTracker$TimeTracker.coverage" NAME="TimeTracker Coverage Results" MODIFIED="1458637500310" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/TimeTracker$ftrack.coverage" NAME="ftrack Coverage Results" MODIFIED="1458291338761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TimeTracker$ftrack.coverage" NAME="ftrack Coverage Results" MODIFIED="1458655830238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TimeTracker$timelog_action.coverage" NAME="timelog_action Coverage Results" MODIFIED="1458215541358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -33,11 +34,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="ftrack.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ftrack.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ftrack.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="77" column="37" selection-start-line="77" selection-start-column="37" selection-end-line="77" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.89346594">
+              <caret line="321" column="55" selection-start-line="321" selection-start-column="55" selection-end-line="321" selection-end-column="55" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -45,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.py">
+      <file leaf-file-name="TimeTracker.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TimeTracker.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -67,23 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="timelogs_action.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../ftrack-connect-package/resource/hook/timelogs_action.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="323" column="71" selection-start-line="323" selection-start-column="71" selection-end-line="323" selection-end-column="71" />
-              <folding>
-                <element signature="e#57#66#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="routes.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.63778406">
-              <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="53" column="25" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
@@ -94,14 +83,15 @@
       <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.333333">
-              <caret line="38" column="85" selection-start-line="38" selection-start-column="85" selection-end-line="38" selection-end-column="85" />
+            <state vertical-scroll-proportion="-26.458334">
+              <caret line="59" column="22" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
               <folding>
                 <element signature="e#1584#1606#0#HTML" expanded="true" />
                 <element signature="e#1672#1694#0#HTML" expanded="true" />
                 <element signature="e#1758#1780#0#HTML" expanded="true" />
-                <element signature="e#1964#1986#0#HTML" expanded="true" />
-                <element signature="e#2308#2330#0#HTML" expanded="true" />
+                <element signature="e#1970#1991#0#HTML" expanded="true" />
+                <element signature="e#2183#2205#0#HTML" expanded="true" />
+                <element signature="e#2527#2549#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -111,7 +101,7 @@
         <entry file="file://$PROJECT_DIR$/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="83" column="9" selection-start-line="83" selection-start-column="9" selection-end-line="83" selection-end-column="9" />
+              <caret line="138" column="45" selection-start-line="138" selection-start-column="45" selection-end-line="138" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -154,15 +144,15 @@
         <option value="P:/pipeline/windows/nuke/bg_scripts/ftrackUpload.py" />
         <option value="/data/production/pipeline/linux/nuke/menu.py" />
         <option value="$PROJECT_DIR$/templates/chart.html" />
-        <option value="$PROJECT_DIR$/TimeTracker.py" />
         <option value="$PROJECT_DIR$/timelog_action.py" />
         <option value="$PROJECT_DIR$/../../ftrack-connect-package/resource/hook/timelogs_action.py" />
         <option value="$PROJECT_DIR$/static/css/home.css" />
         <option value="$PROJECT_DIR$/templates/layout.html" />
-        <option value="$PROJECT_DIR$/templates/home.html" />
-        <option value="$PROJECT_DIR$/static/js/main.js" />
-        <option value="$PROJECT_DIR$/ftrack.py" />
+        <option value="$PROJECT_DIR$/TimeTracker.py" />
         <option value="$PROJECT_DIR$/routes.py" />
+        <option value="$PROJECT_DIR$/static/js/main.js" />
+        <option value="$PROJECT_DIR$/templates/home.html" />
+        <option value="$PROJECT_DIR$/ftrack.py" />
       </list>
     </option>
   </component>
@@ -310,7 +300,7 @@
       <recent name="C:\Users\Nata\Documents\GitHub\TimeTracker\templates" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.TimeTracker">
+  <component name="RunManager" selected="Python.ftrack">
     <configuration default="false" name="ftrack" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -631,7 +621,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1882146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27068436" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2533197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2533197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938644" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -683,8 +673,9 @@
             <element signature="e#1584#1606#0#HTML" expanded="true" />
             <element signature="e#1672#1694#0#HTML" expanded="true" />
             <element signature="e#1758#1780#0#HTML" expanded="true" />
-            <element signature="e#1964#1986#0#HTML" expanded="true" />
-            <element signature="e#2308#2330#0#HTML" expanded="true" />
+            <element signature="e#1970#1991#0#HTML" expanded="true" />
+            <element signature="e#2183#2205#0#HTML" expanded="true" />
+            <element signature="e#2527#2549#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -732,8 +723,9 @@
             <element signature="e#1584#1606#0#HTML" expanded="true" />
             <element signature="e#1672#1694#0#HTML" expanded="true" />
             <element signature="e#1758#1780#0#HTML" expanded="true" />
-            <element signature="e#1964#1986#0#HTML" expanded="true" />
-            <element signature="e#2308#2330#0#HTML" expanded="true" />
+            <element signature="e#1970#1991#0#HTML" expanded="true" />
+            <element signature="e#2183#2205#0#HTML" expanded="true" />
+            <element signature="e#2527#2549#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -789,8 +781,9 @@
             <element signature="e#1584#1606#0#HTML" expanded="true" />
             <element signature="e#1672#1694#0#HTML" expanded="true" />
             <element signature="e#1758#1780#0#HTML" expanded="true" />
-            <element signature="e#1964#1986#0#HTML" expanded="true" />
-            <element signature="e#2308#2330#0#HTML" expanded="true" />
+            <element signature="e#1970#1991#0#HTML" expanded="true" />
+            <element signature="e#2183#2205#0#HTML" expanded="true" />
+            <element signature="e#2527#2549#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -924,13 +917,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TimeTracker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../ftrack-events/plugins/status_assign.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.5980114">
@@ -962,6 +948,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/layout.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33088234">
+          <caret line="15" column="104" selection-start-line="15" selection-start-column="104" selection-end-line="16" selection-end-column="110" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../ftrack-connect-package/resource/hook/timelogs_action.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.7485795">
+          <caret line="323" column="71" selection-start-line="323" selection-start-column="71" selection-end-line="323" selection-end-column="71" />
+          <folding>
+            <element signature="e#57#66#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="25" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/home.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.25">
@@ -970,10 +984,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/layout.html">
+    <entry file="file://$PROJECT_DIR$/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33088234">
-          <caret line="15" column="104" selection-start-line="15" selection-start-column="104" selection-end-line="16" selection-end-column="110" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="138" column="45" selection-start-line="138" selection-start-column="45" selection-end-line="138" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -988,54 +1002,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.333333">
-          <caret line="38" column="85" selection-start-line="38" selection-start-column="85" selection-end-line="38" selection-end-column="85" />
-          <folding>
-            <element signature="e#1584#1606#0#HTML" expanded="true" />
-            <element signature="e#1672#1694#0#HTML" expanded="true" />
-            <element signature="e#1758#1780#0#HTML" expanded="true" />
-            <element signature="e#1964#1986#0#HTML" expanded="true" />
-            <element signature="e#2308#2330#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/main.js">
+    <entry file="file://$PROJECT_DIR$/TimeTracker.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="83" column="9" selection-start-line="83" selection-start-column="9" selection-end-line="83" selection-end-column="9" />
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../ftrack-connect-package/resource/hook/timelogs_action.py">
+    <entry file="file://$PROJECT_DIR$/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="323" column="71" selection-start-line="323" selection-start-column="71" selection-end-line="323" selection-end-column="71" />
+        <state vertical-scroll-proportion="-26.458334">
+          <caret line="59" column="22" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
           <folding>
-            <element signature="e#57#66#0" expanded="true" />
+            <element signature="e#1584#1606#0#HTML" expanded="true" />
+            <element signature="e#1672#1694#0#HTML" expanded="true" />
+            <element signature="e#1758#1780#0#HTML" expanded="true" />
+            <element signature="e#1970#1991#0#HTML" expanded="true" />
+            <element signature="e#2183#2205#0#HTML" expanded="true" />
+            <element signature="e#2527#2549#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ftrack.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="37" selection-start-line="77" selection-start-column="37" selection-end-line="77" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.89346594">
+          <caret line="321" column="55" selection-start-line="321" selection-start-column="55" selection-end-line="321" selection-end-column="55" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63778406">
-          <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
           </folding>
         </state>
       </provider>

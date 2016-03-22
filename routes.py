@@ -50,7 +50,7 @@ def loadChart():
 def exportData():
     project = request.form['project']
     try:
-        exportCVSData(project)
-        return 'success'
+        exportFile = exportCVSData(project)
+        return exportFile
     except Exception, e:
         print e

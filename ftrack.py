@@ -218,17 +218,18 @@ def formatTime(seconds):
 def exportCVSData(project):
     d = getProjectChildren(project)
     sequences = getSequences(project)
-    exportDir = '/home/natasha/Desktop/exportCSV'
+    exportDir = '/data/work01/Documents/exportCSV'
     if not os.path.exists(exportDir):
         os.makedirs(exportDir)
     for sequence in sequences:
         dataList = formatData(sequence, d)
         writeToCVS(project, sequence, exportDir, dataList)
-    consolidateCVS(exportDir, project)
+    exportFile = consolidateCVS(exportDir, project)
+    return exportFile
 
 
 def formatData(sequence, d):
-    shotTimes = getShotTimeDict(sequence, d)
+    shotTimes, userTimes = getShotTimeDict(sequence, d)
     taskList = set()
     shotTaskTimeDict = {}
     mainShotDict = {}
@@ -253,12 +254,12 @@ def formatData(sequence, d):
         tmpList.extend([task, task, task])
     dataList = []
     dataList.append(tmpList)
-    titles = ['Shots', 'Actual (days)', 'Bid (days)', 'Margin (%)']
+    titles = ['Shots', 'Actual (days)', 'Bid (days)', 'Under/Over (%)']
 
     for task in taskList:
         titles.append('Actual (days)')
         titles.append('Bid (days)')
-        titles.append('Margin (%)')
+        titles.append('Under/Over (%)')
     dataList.append(titles)
     for key in mainShotDict.keys():
         shotList = []
@@ -295,7 +296,7 @@ def writeToCVS(project, sequence, exportDir, dataList):
         a.writerows(dataList)
 
 def consolidateCVS(exportDir, project):
-    workbook = xlsxwriter.Workbook('%s/%s_compiled.xlsx' % (exportDir,project))
+    workbook = xlsxwriter.Workbook('%s/%s_compiled.xlsx' % (exportDir, project))
     for filename in glob.glob('%s/*.csv' % exportDir):
         fpath, fname = os.path.split(filename)
         fsname, fext = os.path.splitext(fname)
@@ -308,9 +309,14 @@ def consolidateCVS(exportDir, project):
             for colx, value in enumerate(row):
                 if value and value[0] == '-': # To avoid error when converting str with negative value to float.
                     worksheet.set_row(rowx, None, cell_format)
-                worksheet.write(rowx, colx, value)
+                if value == "Under/Over (%)":
+                    red = workbook.add_format({'color': 'red'})
+                    worksheet.write_rich_string(rowx, colx, 'Under/', red, 'Over', ' (%)')
+                else:
+                    worksheet.write(rowx, colx, value)
 
     workbook.close()
     # Clear the csv files
     for filename in glob.glob('%s/*.csv' % exportDir):
         os.remove(filename)
+    return '%s/%s_compiled.xlsx' % (exportDir, project)

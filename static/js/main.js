@@ -103,6 +103,7 @@ $("#submit").bind('click', function() {
     $("#loader").show();
     $("#done").hide();
     $("#fail").hide();
+    $("#filename").hide();
     project = $("#projects").val();
     sequence = $("#sequences").val();
     shot = $("#shots").val();
@@ -124,6 +125,7 @@ $("#export").bind('click', function () {
     $("#loader").show();
     $("#done").hide();
     $("#fail").hide();
+    $("#filename").hide();
     $.ajax({
         type: "POST",
         url: "/export_data",
@@ -131,14 +133,15 @@ $("#export").bind('click', function () {
             project: $("#projects").val()
         },
         success: function (data) {
-            if (data == 'success'){
-                $("#loader").hide();
-                $("#done").show();
-            }
-            else {
-                $("#loader").hide();
-                $("#fail").show();
-            }
+            $("#loader").hide();
+            $("#done").show();
+            $("#filename").show();
+            $("#filename").val("Exported to: "+data)
+        },
+        error: function () {
+            $("#loader").hide();
+            $("#fail").show();
+            $("#filename").hide();
         }
     });
 });
