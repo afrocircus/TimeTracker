@@ -35,13 +35,15 @@ def loadChart():
     shot = request.form['shot']
 
     if sequence == 'all':
-        dataArr = getSequenceChart(project)
+        dataArr, userArr = getSequenceChart(project)
     elif shot == 'all':
-        dataArr = getShotChart(project, sequence)
+        dataArr, userArr = getShotChart(project, sequence)
     else:
-        dataArr = getTaskChart(project, sequence, shot)
-
-    return json.dumps(dataArr)
+        dataArr, userArr = getTaskChart(project, sequence, shot)
+    newArr = []
+    newArr.append(dataArr)
+    newArr.append(userArr)
+    return json.dumps(newArr)
 
 
 @app.route('/export_data', methods=['POST'])

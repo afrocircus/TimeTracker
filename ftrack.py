@@ -48,47 +48,70 @@ def getSequenceChart(projectName):
     seqList = getSequenceList([], d)
     seqDataList = []
     seqDataList.append(["Sequences", "Actual", "Bid", {'role':'style'}])
+    seqUserList = [["User", "Days"]]
+    userDict = {}
     for seq in seqList:
-        shotTimes = getShotTimeDict(seq, d)
+        shotTimes, userTimes = getShotTimeDict(seq, d)
         seqTime, bidTime = getSeqTiming(shotTimes)
         seqDataList.append([str(seq), formatTime(seqTime), formatTime(bidTime), "#dc3912"])
-    return seqDataList
+        for key in userTimes.keys():
+            if userDict.has_key(key):
+                userDict[key] += userTimes[key]
+            else:
+                userDict[key] = userTimes[key]
+    for user in userDict.keys():
+        seqUserList.append([user, formatTime(userDict[user])])
+    return seqDataList, seqUserList
 
 
 def getShotChart(projectName, sequenceName):
     d = getProjectChildren(projectName)
-    shotTimes = getShotTimeDict(sequenceName, d)
+    shotTimes, userTimes = getShotTimeDict(sequenceName, d)
     shotDataList = []
     shotDataList.append(["Shots", "Actual", "Bid", {'role':'style'}])
     for shot in shotTimes.keys():
         time, bid = shotTimes[shot]
         shotDataList.append([str(shot), formatTime(time), formatTime(bid), "#dc3912"])
-    return shotDataList
+    userDataList = [["User", "Days"]]
+    for user in userTimes.keys():
+        userDataList.append([user, formatTime(userTimes[user])])
+    return shotDataList, userDataList
 
 
 def getTaskChart(projectName, sequenceName, shotName):
     d = getProjectChildren(projectName)
     taskDict = getTaskTimeDict(sequenceName, shotName, d)
     taskDataList = []
+    taskUserList = []
     taskDataList.append(["Tasks", "Actual", "Bid", {'role':'style'}])
+    taskUserList.append(["User", "Days"])
+    userDict = {}
     for task in taskDict.keys():
         time = taskDict[task]['duration']
         bid = taskDict[task]['bid']
         taskDataList.append([str(taskDict[task]['task']), formatTime(time), formatTime(bid), "#dc3912"])
-    return taskDataList
+        user = taskDict[task]['user']
+        if userDict.has_key(user):
+            userDict[user] += time
+        else:
+            userDict[user] = time
+    for key in userDict.keys():
+        taskUserList.append([key, formatTime(userDict[key])])
+    return taskDataList, taskUserList
 
 
 def getShotTimeDict(seq, d):
     shotTimes = {}
+    userTimes = {}
     seqName = '%s/Sequence' % seq
     if d.has_key(seqName):
-        shotTimes = getShotTiming(d[seqName])
+        shotTimes, userTimes = getShotTiming(d[seqName])
     else:
         for key in d.keys():
             if 'Episode' in key:
                 shotDict = getDict(seqName, d[key])
-                shotTimes = getShotTiming(shotDict)
-    return shotTimes
+                shotTimes, userTimes = getShotTiming(shotDict)
+    return shotTimes, userTimes
 
 
 def getTaskTimeDict(seq, shot, d):
@@ -157,6 +180,7 @@ def getSequenceList(seqList, d):
 
 def getShotTiming(d):
     shotTiming = {}
+    userTiming = {}
     for key in d.keys():
         totalTime = 0
         bidTime = 0
@@ -165,9 +189,14 @@ def getShotTiming(d):
             if len(task.split('/')) == 1: # Making sure we're dealing with a task.
                 totalTime = totalTime + float(taskDict[task]['duration'])
                 bidTime = bidTime + float(taskDict[task]['bid'])
+                user = taskDict[task]['user']
+                if userTiming.has_key(user):
+                    userTiming[user] += taskDict[task]['duration']
+                else:
+                    userTiming[user] = taskDict[task]['duration']
         shot = key.split('/')[0]
         shotTiming[shot] = (totalTime, bidTime)
-    return shotTiming
+    return shotTiming, userTiming
 
 
 def getSeqTiming(d):
@@ -285,5 +314,3 @@ def consolidateCVS(exportDir, project):
     # Clear the csv files
     for filename in glob.glob('%s/*.csv' % exportDir):
         os.remove(filename)
-
-exportCVSData('bg_tlf')

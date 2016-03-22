@@ -7,7 +7,7 @@ google.charts.setOnLoadCallback(function() {drawChart([])});
 
 var chartData = [];
 
-function drawChart(dataArray) {
+function drawChart(dataArray, userArray) {
     var data = google.visualization.arrayToDataTable(dataArray);
 
     var view = new google.visualization.DataView(data);
@@ -24,13 +24,23 @@ function drawChart(dataArray) {
 
     var options = {
         title: "Duration of "+ dataArray[0][0] +" in Days",
-        width: 1000,
+        width: 700,
         height: 500,
         animation:{
             duration:1000,
             startup: true
         }
     };
+    var pieData = google.visualization.arrayToDataTable(userArray);
+    var optionsPieChart = {
+        legend: {position: 'labeled'},
+        is3D: false,
+        pieHole: 0,
+        chartArea:{width:'92%',height:'92%'},
+        pieSliceText: 'value'
+    };
+    var piechart = new google.visualization.PieChart(document.getElementById("piechart_values"));
+    piechart.draw(pieData, optionsPieChart);
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
     var runFirstTime = google.visualization.events.addListener(chart, 'ready', function(){
         google.visualization.events.removeListener(runFirstTime);
@@ -55,7 +65,8 @@ function getDataFromServer(project, sequence, shot, callback){
             callback(data);
         },
         error: function(){
-            callback([]);
+            $("#loader").hide();
+            $("#fail").show();
         }
     });
 }
@@ -90,23 +101,29 @@ $("#sequences").change(function() {
 
 $("#submit").bind('click', function() {
     $("#loader").show();
+    $("#done").hide();
+    $("#fail").hide();
     project = $("#projects").val();
     sequence = $("#sequences").val();
     shot = $("#shots").val();
     getDataFromServer(project, sequence, shot, function(chartData){
-        if (chartData === undefined || chartData.length == 0) {
+        if (chartData[0] === undefined || chartData[0].length == 0) {
             alert("error");
         }
         else {
             $("#loader").hide();
+            $("#done").show();
             $("#bid-panel").show();
-            drawChart(chartData);
+            $("#user-panel").show();
+            drawChart(chartData[0], chartData[1]);
         }
     });
 });
 
 $("#export").bind('click', function () {
     $("#loader").show();
+    $("#done").hide();
+    $("#fail").hide();
     $.ajax({
         type: "POST",
         url: "/export_data",
@@ -116,10 +133,11 @@ $("#export").bind('click', function () {
         success: function (data) {
             if (data == 'success'){
                 $("#loader").hide();
-                alert('export complete')
+                $("#done").show();
             }
             else {
-                alert('export failed')
+                $("#loader").hide();
+                $("#fail").show();
             }
         }
     });
