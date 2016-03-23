@@ -7,7 +7,7 @@ google.charts.setOnLoadCallback(function() {drawChart([])});
 
 var chartData = [];
 
-function drawChart(dataArray, userArray) {
+function drawChart(dataArray, userArray, logArray) {
     var data = google.visualization.arrayToDataTable(dataArray);
 
     var view = new google.visualization.DataView(data);
@@ -41,6 +41,18 @@ function drawChart(dataArray, userArray) {
     };
     var piechart = new google.visualization.PieChart(document.getElementById("piechart_values"));
     piechart.draw(pieData, optionsPieChart);
+
+    var pieLogData = google.visualization.arrayToDataTable(logArray);
+    var optionsLogPieChart = {
+        legend: {position: 'labeled'},
+        is3D: false,
+        pieHole: 0,
+        chartArea:{width:'92%',height:'92%'},
+        pieSliceText: 'value'
+    };
+    var logPiechart = new google.visualization.PieChart(document.getElementById("piechart_users"));
+    logPiechart.draw(pieLogData, optionsLogPieChart);
+
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
     var runFirstTime = google.visualization.events.addListener(chart, 'ready', function(){
         google.visualization.events.removeListener(runFirstTime);
@@ -116,7 +128,8 @@ $("#submit").bind('click', function() {
             $("#done").show();
             $("#bid-panel").show();
             $("#user-panel").show();
-            drawChart(chartData[0], chartData[1]);
+            $("#user-panel2").show();
+            drawChart(chartData[0], chartData[1], chartData[2]);
         }
     });
 });

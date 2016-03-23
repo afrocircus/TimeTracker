@@ -35,14 +35,12 @@ def loadChart():
     shot = request.form['shot']
 
     if sequence == 'all':
-        dataArr, userArr = getSequenceChart(project)
+        dataArr, userArr, logArr = getSequenceChart(project)
     elif shot == 'all':
-        dataArr, userArr = getShotChart(project, sequence)
+        dataArr, userArr, logArr = getShotChart(project, sequence)
     else:
-        dataArr, userArr = getTaskChart(project, sequence, shot)
-    newArr = []
-    newArr.append(dataArr)
-    newArr.append(userArr)
+        dataArr, userArr, logArr = getTaskChart(project, sequence, shot)
+    newArr = [dataArr, userArr, logArr]
     return json.dumps(newArr)
 
 
